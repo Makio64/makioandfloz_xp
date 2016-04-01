@@ -1,0 +1,66 @@
+{
+  "name": "Starter",
+  "version": "1.0.0",
+  "description": "starter with coffee / stylus / jade / webpack",
+  "homepage": "https://github.com/Makio64/starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Makio64/starter"
+  },
+  "bugs": {
+    "url": "https://github.com/Makio64/starter/issues"
+  },
+  "keywords": [
+    "starter",
+    "webpack",
+    "stylus",
+    "jade",
+    "coffee"
+  ],
+  "authors": [
+    "david.ronai <david.ronai@gmail.com>"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  },
+  "peerDependencies": {
+    "browser-sync": "*",
+    "jade": "*",
+    "nib": "*",
+    "stylus": "*",
+    "coffee-script": "*",
+    "webpack": "*"
+  },
+  "devDependencies": {
+    "browser-sync-webpack-plugin": "*",
+    "coffee-loader": "*",
+    "detect-audio-autoplay": "^1.1.0",
+    "detect-media-element-source": "^1.0.3",
+    "hashmark": "*",
+    "ios-safe-audio-context": "^1.0.1",
+    "jade-html-loader": "*",
+    "jade-loader": "*",
+    "json-loader": "*",
+    "raw-loader": "*",
+    "script-loader": "*",
+    "shader-loader": "*",
+    "signals": "*",
+    "tap-event": "^1.0.0",
+    "web-audio-player": "^1.1.1"
+  },
+  "scripts": {
+    "start": "npm run preBuild && npm run jade:dev -s & npm run js:dev & npm run -s css:dev",
+    "build": "for step in 'preBuild' 'preDist' 'jade:dist' 'js:dist' 'css:dist' 'toDist'; do npm run $step; done",
+    "preBuild": "rm -rf build/ && mkdir build/ && mkdir build/css && mkdir build/js",
+    "preDist": "rm -rf dist/ && mkdir dist/",
+    "toDist": "cp -rf build/** dist & cp -rf static/** dist",
+    "js:dev": "webpack --progress --colors -w",
+    "js:dist": "webpack --progress --colors --optimize-minimize --optimize-occurence-order --optimize-dedupe -p",
+    "jade:dev": "jade src/jade/index.jade -P -w -o build",
+    "jade:dist": "jade src/jade/index.jade -P -o build",
+    "css:dev": "stylus -w src/stylus/main.styl -o build/css -u nib --sourcemap",
+    "css:dist": "stylus -u nib src/stylus/main.styl -o build/css"
+  }
+}

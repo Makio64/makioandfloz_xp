@@ -1,0 +1,66 @@
+@import 'nib'
+
+// GENERIC
+global-reset()
+reset-html5()
+
+.three, .stage3dCSS
+	position absolute
+	top 0
+	left 0
+	z-index 1
+	background transparent
+
+body
+	background #000
+	// overflow hidden
+	min-height 100%
+	height 100%
+	width 100%
+	color #FFF
+
+.sound
+	position absolute
+	z-index 2
+	width 30px
+	height 30px
+	cursor pointer
+	bottom 0
+	right 0
+	color #333
+	font-size: 11px
+	padding 0 10px
+	text-decoration none
+	opacity: .5
+	transition .15s all ease-in
+	&:hover
+		opacity 1
+
+.credit
+	position absolute
+	z-index 2
+	padding 10px 20px
+	background rgba(0,0,0,0.05)
+	bottom 0
+	left 0
+	color #333
+	font-size: 11px
+	text-decoration none
+	transition .3s all ease-in
+	&:before
+		content ""
+		display block
+		position absolute
+		z-index -1
+		transition .3s all ease-in
+		transform scale(0,1)
+		transform-origin top left
+		top 0
+		left 0
+		width 100%
+		height 100%
+		background #000
+	&:hover
+		color #FFF
+		&:before
+			transform scale(1,1)
