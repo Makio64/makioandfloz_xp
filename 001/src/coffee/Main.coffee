@@ -32,12 +32,18 @@ class Main
 		Stage3d.init({background:0xffffff})
 		Stage3d.control = new OrbitControl(Stage3d.camera,10)
 
-		@material = new THREE.MeshBasicMaterial({color:0,transparent:false,depthWrite:false,depthTest:false})
+		@material = new THREE.RawShaderMaterial({
+			vertexShader:require('text.vs')
+			fragmentShader:require('text.fs')
+			transparent:false
+			depthWrite:false
+			depthTest:false
+		})
 		binLoader = new THREE.BinaryLoader();
 		binLoader.load( "3d/logo.js", ( geometry, materials )=>
-			geometry.computeVertexNormals()
 			geometry.computeBoundingBox()
 			geometry.computeBoundingSphere()
+			geometry.computeVertexNormals()
 			mesh = new THREE.Mesh( geometry, @material )
 			Stage3d.add(mesh)
 		)
@@ -48,6 +54,14 @@ class Main
 		material = new THREE.MeshBasicMaterial({color:0,transparent:true,depthWrite:false,depthTest:false})
 		@torus = new THREE.Mesh(new THREE.TorusGeometry(10,.6,16,64), material)
 		Stage3d.add @torus
+
+		material = new THREE.MeshBasicMaterial({color:0,transparent:true,depthWrite:false,depthTest:false,wireframe:true})
+		@sphere = new THREE.Mesh(new THREE.IcosahedronGeometry(10,3), material)
+		Stage3d.add @sphere
+
+		material = new THREE.MeshBasicMaterial({color:0,transparent:true,depthWrite:false,depthTest:false,wireframe:true})
+		@sphere2 = new THREE.Mesh(new THREE.IcosahedronGeometry(30,3), material)
+		Stage3d.add @sphere2
 
 		# ---------------------------------------------------------------------- INIT AUDIO
 
@@ -128,6 +142,9 @@ class Main
 		@torus.material.wireframe = @material.wireframe
 		@torus.material.opacity *= 0.9
 
+		@sphere2.material.opacity *= 0.9
+		@sphere.material.opacity *= 0.9
+
 		Stage3d.control.radius = 10+Analyser.volume*4
 
 		@psycho -= dt
@@ -143,6 +160,13 @@ class Main
 
 		if(Math.random()>.5)
 			@torus.material.opacity = 1
+
+		if(Math.random()>.8)
+			@sphere.material.opacity = 1
+
+		if(Math.random()>.94)
+			@sphere2.material.opacity = 1
+
 
 		Stage3d.control._radius = 10+Analyser.volume*7
 
