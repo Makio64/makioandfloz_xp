@@ -67,7 +67,7 @@ class Main
 
 		@context = createAudioContext()
 		@masterGain = @context.createGain()
-		@masterGain.gain.value = .02
+		@masterGain.gain.value = .03
 
 		Analyser.init(@context, @masterGain)
 		Analyser.onBeat.add(@onBeat)
@@ -75,13 +75,14 @@ class Main
 		@masterGain.connect(Analyser.analyser)
 
 		detectAutoplay((autoplay)=>
+			w = if parent then parent.window else window
 			if autoplay then canplay()
 			else
 				onTap = ( ev  )=>
-					window.removeEventListener('touchend', onTap)
+					w.removeEventListener('touchend', onTap)
 					ev.preventDefault()
 					canplay()
-			window.addEventListener('touchend', onTap)
+			w.addEventListener('touchend', onTap)
 		)
 
 		canplay=()=>
